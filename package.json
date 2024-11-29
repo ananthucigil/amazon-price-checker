@@ -4,7 +4,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+     "build": "sh render-build.sh"
   },
   "keywords": [],
   "author": "",
