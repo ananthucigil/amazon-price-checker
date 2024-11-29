@@ -12,25 +12,33 @@ async function getPrice(url, minimumPrice, email){
 
  try {
     const browser = await chromium.launch();
+    console.log("browser launched");
     const context = await browser.newContext();
     const page = await context.newPage();
+    console.log("Navigating to URL...");
     await page.goto(url);
+    console.log("Extracting price...");
     const priceElement = await page.evaluate(()=>document.querySelector(".a-price-whole").textContent);
     await browser.close();
 
    const price =  parseInt(priceElement);
    if( price <= minimumPrice ){
-
-      const info =  await sgMail.send({
+      try{
+        const info =  await sgMail.send({
          to: email,      
          from: 'ananthusijil@gmail.com',   
          subject: 'Amazon Price Checker',
          text: 'The product is cheap now.',
          html: '<strong>The product is cheap now.</strong>',
-       }) 
+       })
+      }catch(error){
+        console.log("Error in sending mail:",error);
+      }
+       
    }
     
  } catch (error) {
+    console.log("error in playwright");
     console.log(error?.response?.body?.errors);
  }
 }
