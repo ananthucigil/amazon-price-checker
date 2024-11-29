@@ -1,9 +1,11 @@
 {
   "name": "web-scraper",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
-  "scripts": {},
+  "scripts": {
+    "start": "nodemon server.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
