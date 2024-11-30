@@ -11,7 +11,16 @@ async function getPrice(url, minimumPrice, email){
   sgMail.setApiKey(sendgridApiKey); 
 
  try {
-    const browser = await chromium.launch({extended:true});
+    const browser = await chromium.launch({
+  headless: true,
+  logger: {
+    isEnabled: (name, severity) => true,
+    log: (name, severity, message, args) => {
+      console.log(`${name} ${severity} ${message}`, args);
+    },
+  },
+});
+
     console.log("browser launched");
     const context = await browser.newContext();
     const page = await context.newPage();
